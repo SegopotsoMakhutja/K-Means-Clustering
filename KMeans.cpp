@@ -1,3 +1,11 @@
+/**
+ * 
+ * K-Means clustering
+ * Author: Segopotso Makhutja
+ * Date: Aug 2019
+ * 
+ **/
+
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
@@ -9,10 +17,9 @@
 
 using namespace std;
 
-
 // forward declaration of the functions used.
-int sum(vector<int> input);
-vector<double> computeMean(vector<int> xInput, vector<int> yInput, vector<double> kMean);
+int sum(vector<double> input);
+vector<double> computeMean(vector<double> xInput, vector<double> yInput, vector<double> kMean);
 
 ofstream outputFile;
 
@@ -22,9 +29,9 @@ int main()
     int counter = 0;
     int iteration = 1; // keep track of number of iterations
 
-    vector<int> xInput = {2, 2, 8, 5, 7, 6, 1, 4};
-    vector<int> yInput = {10, 5, 4, 8, 5, 4, 2, 9};
     vector<double> kMean = {2, 5, 1, 10, 8, 2};
+    vector<double> xInput = {2, 2, 8, 5, 7, 6, 1, 4};
+    vector<double> yInput = {10, 5, 4, 8, 5, 4, 2, 9};
 
     vector<double> centroids;
     vector<double> new_centroids;
@@ -36,77 +43,77 @@ int main()
     double xnew_centroid1, xnew_centroid2, xnew_centroid3;
     double ynew_centroid1, ynew_centroid2, ynew_centroid3;
 
-    
-   for (;;)
-   {
-      outputFile << "Iteration " << iteration << endl;
-      outputFile << "\n";
+    for (;;)
+    {
+        outputFile << "Iteration " << iteration << endl;
+        outputFile << "----------------------------------------------------" << endl;
+        outputFile << "\n";
 
-      if (counter == 0)
-      {
-         centroids = computeMean(xInput, yInput, kMean);
-         new_centroids = centroids;
-         xnew_centroid1 = centroids[0];
-         xnew_centroid2 = centroids[1];
-         xnew_centroid3 = centroids[2];
+        if (counter == 0)
+        {
+            centroids = computeMean(xInput, yInput, kMean);
+            new_centroids = centroids;
+            xnew_centroid1 = centroids[0];
+            xnew_centroid2 = centroids[1];
+            xnew_centroid3 = centroids[2];
 
-         ynew_centroid1 = centroids[3];
-         ynew_centroid2 = centroids[4];
-         ynew_centroid3 = centroids[5];
+            ynew_centroid1 = centroids[3];
+            ynew_centroid2 = centroids[4];
+            ynew_centroid3 = centroids[5];
 
-         xcurrent_centroid1 = xnew_centroid1;
-         xcurrent_centroid2 = xnew_centroid2;
-         xcurrent_centroid3 = xnew_centroid3;
+            xcurrent_centroid1 = xnew_centroid1;
+            xcurrent_centroid2 = xnew_centroid2;
+            xcurrent_centroid3 = xnew_centroid3;
 
-         ycurrent_centroid1 = ynew_centroid1;
-         ycurrent_centroid2 = ynew_centroid2;
-         ycurrent_centroid3 = ynew_centroid3;
+            ycurrent_centroid1 = ynew_centroid1;
+            ycurrent_centroid2 = ynew_centroid2;
+            ycurrent_centroid3 = ynew_centroid3;
 
-         counter++;
-      }
+            counter++;
+        }
 
-      else
-      {
-         centroids = computeMean(xInput, yInput, new_centroids);
-         new_centroids = centroids;
-         xnew_centroid1 = centroids[0];
-         xnew_centroid2 = centroids[1];
-         xnew_centroid3 = centroids[2];
+        else
+        {
+            centroids = computeMean(xInput, yInput, new_centroids);
+            new_centroids = centroids;
+            xnew_centroid1 = centroids[0];
+            xnew_centroid2 = centroids[1];
+            xnew_centroid3 = centroids[2];
 
-         ynew_centroid1 = centroids[3];
-         ynew_centroid2 = centroids[4];
-         ynew_centroid3 = centroids[5];
+            ynew_centroid1 = centroids[3];
+            ynew_centroid2 = centroids[4];
+            ynew_centroid3 = centroids[5];
 
-         if ((xnew_centroid1 == xcurrent_centroid1) && (xnew_centroid2 == xcurrent_centroid2) && (xnew_centroid3 == xcurrent_centroid3))
-         {
-            if ((ynew_centroid1 == ycurrent_centroid1) && (ynew_centroid2 == ycurrent_centroid2) && (ynew_centroid3 == ycurrent_centroid3))
+            if ((xnew_centroid1 == xcurrent_centroid1) && (xnew_centroid2 == xcurrent_centroid2) && (xnew_centroid3 == xcurrent_centroid3))
             {
-               break;
+                if ((ynew_centroid1 == ycurrent_centroid1) && (ynew_centroid2 == ycurrent_centroid2) && (ynew_centroid3 == ycurrent_centroid3))
+                {
+                    break;
+                }
             }
-         }
 
-         xcurrent_centroid1 = xnew_centroid1;
-         xcurrent_centroid2 = xnew_centroid2;
-         xcurrent_centroid3 = xnew_centroid3;
+            xcurrent_centroid1 = xnew_centroid1;
+            xcurrent_centroid2 = xnew_centroid2;
+            xcurrent_centroid3 = xnew_centroid3;
 
-         ycurrent_centroid1 = ynew_centroid1;
-         ycurrent_centroid2 = ynew_centroid2;
-         ycurrent_centroid3 = ynew_centroid3;
-      }
+            ycurrent_centroid1 = ynew_centroid1;
+            ycurrent_centroid2 = ynew_centroid2;
+            ycurrent_centroid3 = ynew_centroid3;
+        }
 
-      iteration++;
-   }
+        iteration++;
+    }
 
     outputFile << "it needs " << iteration << " iterations to converge." << endl;
-
+    outputFile << "----------------------------------------------------" << endl;
     outputFile.close(); // always close files
-    
+
     return 0;
 }
 
-int sum(vector<int> input)
+int sum(vector<double> input)
 {
-    int res = 0;
+    int res = 0; // result
 
     for (int i = 0; i < input.size(); ++i)
     {
@@ -116,11 +123,11 @@ int sum(vector<int> input)
     return res;
 }
 
-vector<double> computeMean(vector<int> xInput, vector<int> yInput, vector<double> kMean)
+vector<double> computeMean(vector<double> xInput, vector<double> yInput, vector<double> kMean)
 {
-    vector<int> xcluster1, xcluster2, xcluster3;
+    vector<double> xcluster1, xcluster2, xcluster3;
 
-    vector<int> ycluster1, ycluster2, ycluster3;
+    vector<double> ycluster1, ycluster2, ycluster3;
 
     vector<double> clusters;
 
@@ -143,7 +150,7 @@ vector<double> computeMean(vector<int> xInput, vector<int> yInput, vector<double
         str_num << i + 1;
         str = str_num.str();
 
-        // comparing the euclidean distances
+        // comparing the euclidean distances and adding to the vectors
         if ((distance1 < distance2) && (distance1 < distance3))
         {
             xcluster1.push_back(xInput[i]);
@@ -166,7 +173,7 @@ vector<double> computeMean(vector<int> xInput, vector<int> yInput, vector<double
         }
     }
 
-    // calculating means of the clusters 
+    // calculating means of the clusters
     double xsum1 = sum(xcluster1);
     double ysum1 = sum(ycluster1);
 
@@ -186,15 +193,18 @@ vector<double> computeMean(vector<int> xInput, vector<int> yInput, vector<double
     ycentroid3 = ysum3 / ycluster3.size();
 
     outputFile << cluster1 << "\n";
-    outputFile << "Centroid: " << "(" << xcentroid1 << ", " << ycentroid1 << ")" << endl;
+    outputFile << "Centroid: "
+               << "(" << xcentroid1 << ", " << ycentroid1 << ")" << endl;
     outputFile << "\n";
-    
+
     outputFile << cluster2 << "\n";
-    outputFile << "Centroid: " << "(" << xcentroid2 << ", " << ycentroid2 << ")" << endl;
+    outputFile << "Centroid: "
+               << "(" << xcentroid2 << ", " << ycentroid2 << ")" << endl;
     outputFile << "\n";
-    
+
     outputFile << cluster3 << "\n";
-    outputFile << "Centroid: " << "(" << xcentroid3 << ", " << ycentroid3 << ")" << endl;
+    outputFile << "Centroid: "
+               << "(" << xcentroid3 << ", " << ycentroid3 << ")" << endl;
     outputFile << "\n";
 
     clusters.push_back(xcentroid1);
